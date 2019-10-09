@@ -47,9 +47,9 @@ def set_opts():
                         help="Noise type of simulation: NIIDGauss or IIDGauss, (default:NIIDGauss)")
 
     # model and log saving
-    parser.add_argument('--log_dir', default='./log_VAE7', type=str, metavar='PATH',
+    parser.add_argument('--log_dir', default='./log_VAE8', type=str, metavar='PATH',
                                                  help="Path to save the log file, (default: ./log)")
-    parser.add_argument('--model_dir', default='./model_VAE7', type=str, metavar='PATH',
+    parser.add_argument('--model_dir', default='./model_VAE8', type=str, metavar='PATH',
                                              help="Path to save the model file, (default: ./model)")
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                                                help="Path to the latest checkpoint (default: None)")
