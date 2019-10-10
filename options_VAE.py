@@ -15,7 +15,7 @@ def set_opts():
                                                   help="Initialized learning rate, (default: 1e-4)")
     parser.add_argument('--gamma', type=float, default=0.5,
                                          help="Decaying rate for the learning rate, (default: 0.5)")
-    parser.add_argument('--step_size', type=int, default=15,
+    parser.add_argument('--step_size', type=int, default=11,
                                      help="Step size for decaying the learning rate, (default: 10)")
     parser.add_argument('--epochs', type=int, default=100,
                                                    help="Number of training epochs, (default: 100)")
@@ -51,7 +51,7 @@ def set_opts():
                                                  help="Path to save the log file, (default: ./log)")
     parser.add_argument('--model_dir', default='./model_VAE8', type=str, metavar='PATH',
                                              help="Path to save the model file, (default: ./model)")
-    parser.add_argument('--resume', default='', type=str, metavar='PATH',
+    parser.add_argument('--resume', default='./model_VAE8/model_11', type=str, metavar='PATH',
                                                help="Path to the latest checkpoint (default: None)")
     parser.add_argument('--num_workers', default=8, type=int,
                                                 help="Number of workers to load data, (default: 8)")

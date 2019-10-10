@@ -213,8 +213,8 @@ def main():
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             scheduler.load_state_dict(checkpoint['lr_scheduler_state_dict'])
             net.load_state_dict(checkpoint['model_state_dict'])
-            args.clip_grad_D = checkpoint['grad_norm_D']
-            args.clip_grad_S = checkpoint['grad_norm_S']
+            args.clip_grad = checkpoint['grad_norm']
+            #args.clip_grad_S = checkpoint['grad_norm_S']
             print('=> Loaded checkpoint {:s} (epoch {:d})'.format(args.resume, checkpoint['epoch']))
         else:
             sys.exit('Please provide corrected model path!')
