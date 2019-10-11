@@ -5,8 +5,8 @@
 import torch
 #import torch.nn.functional as F
 
-lamX = [0.2,0.2,0.2,0.2,1]
-lamE = [0.2,0.2,0.2,0.2,1]
+lamX = [0.1,0.1,0.1,0.1,0.1,1]
+lamE = [0.1,0.1,0.1,0.1,0.1,1]
 lamReY=0.05
 lamReZ=0.005
 

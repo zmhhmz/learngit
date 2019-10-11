@@ -76,7 +76,7 @@ class ReconstructNet(nn.Module):
 
 
 class VAEnet(nn.Module):
-    def __init__(self, level=5, n_channels=96, image_channels=3):
+    def __init__(self, level=6, n_channels=96, image_channels=3):
         super(VAEnet, self).__init__()
         self.level = level
         self.n_channels=n_channels
@@ -87,23 +87,25 @@ class VAEnet(nn.Module):
         self.Xnet3=Xnet(image_channels,n_channels)
         self.Xnet4=Xnet(image_channels,n_channels)
         self.Xnet5=Xnet(image_channels,n_channels)
+        self.Xnet6=Xnet(image_channels,n_channels)    	
 
         self.Znet1=Znet(image_channels,n_channels)
         self.Znet2=Znet(image_channels,n_channels)
         self.Znet3=Znet(image_channels,n_channels)
         self.Znet4=Znet(image_channels,n_channels)
         self.Znet5=Znet(image_channels,n_channels)
+        self.Znet6=Znet(image_channels,n_channels)
 
         self.Enet1 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)
         self.Enet2 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)
         self.Enet3 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)
         self.Enet4 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)
         self.Enet5 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)
-        
+        self.Enet6 = nn.Conv2d(in_channels=n_channels, out_channels=image_channels, kernel_size=3, padding=1, bias=False)        
 
-        self.Xnetlist=[self.Xnet1,self.Xnet2,self.Xnet3,self.Xnet4,self.Xnet5]
-        self.Znetlist=[self.Znet1,self.Znet2,self.Znet3,self.Znet4,self.Znet5]
-        self.Enetlist=[self.Enet1,self.Enet2,self.Enet3,self.Enet4,self.Enet5]
+        self.Xnetlist=[self.Xnet1,self.Xnet2,self.Xnet3,self.Xnet4,self.Xnet5,self.Xnet6]
+        self.Znetlist=[self.Znet1,self.Znet2,self.Znet3,self.Znet4,self.Znet5,self.Znet6]
+        self.Enetlist=[self.Enet1,self.Enet2,self.Enet3,self.Enet4,self.Enet5,self.Enet6]
         self.Rnet = ReconstructNet(image_channels,n_channels)
 
         self._initialize_weights()
