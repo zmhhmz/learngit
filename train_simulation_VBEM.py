@@ -21,7 +21,7 @@ import torch
 import os
 import sys
 from pathlib import Path
-from options_VAE import set_opts
+from options_VBEM import set_opts
 import matplotlib.pyplot as plt
 
 # filter warnings
