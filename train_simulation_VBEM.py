@@ -76,7 +76,7 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
             im_noisy, im_gt, sigmaMapEst, sigmaMapGt = [x.cuda() for x in data]
             optimizer.zero_grad()
             Outlist = net(im_noisy)
-            loss, loss_lh, loss_kl_gauss, loss_kl_Igamma,loss_VBM = criterion(Outlist,im_gt,im_noisy,sigmaMapGt,args.eps2,args.stages,args.batch_size)
+            loss, loss_lh, loss_kl_gauss, loss_kl_Igamma,loss_VBM = criterion(Outlist,im_noisy,im_gt,sigmaMapGt,args.eps2,args.stages,args.batch_size)
             
             loss.backward()
             # clip the gradnorm
@@ -127,9 +127,9 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
             for ii, data in enumerate(data_loader[phase]):
                 im_noisy, im_gt = [x.cuda() for x in data]
                 with torch.set_grad_enabled(False):
-                    Xlist,Zlist,Elist,reYlist,reZlist = net(im_noisy)
+                    Outlist = net(im_noisy)
 
-                im_denoise = torch.clamp(Xlist[-1].detach().data, 0.0, 1.0)
+                im_denoise = torch.clamp(Outlist[-1][:,:C,].detach().data, 0.0, 1.0)
                 mse = F.mse_loss(im_denoise, im_gt)
                 mse_per_epoch[phase] += mse
                 psnr_iter = batch_PSNR(im_denoise, im_gt)
