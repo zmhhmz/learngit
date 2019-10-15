@@ -65,7 +65,7 @@ def loss_fn(Outlist, im_noisy, im_gt, sigmaMap, eps2, stages,radius=3):
         #VB-M loss
         if i>0:
             temp_loss_VBM = 0.5*log_m2+0.5*((mu_p-mu)**2+m2_p)/m2-alpha*log_beta+log_gamma(alpha)+(alpha+1)*(log_beta_p-dig_alp_p)+beta*alpha_div_beta_p
-            loss_VBM+=temp_loss_VBM
+            loss_VBM+=torch.mean(temp_loss_VBM)
         mu_p=mu
         m2_p=m2
         log_beta_p=log_beta

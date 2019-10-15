@@ -48,8 +48,8 @@ class Mnet(nn.Module):
         layers.append(nn.Conv2d(in_channels=n_channels, out_channels=n_channels, kernel_size=3, padding=1, bias=False))
         self.cnnblock = nn.Sequential(*layers)
         
-    def forward(self, mu,m2,alpha,beta,Y,M):
-        x1=torch.cat((mu,m2,alpha,beta,Y,M),1)
+    def forward(self, out,Y,M):
+        x1=torch.cat((out,Y,M),1)
         out = self.cnnblock(x1)
         M=out+M
         return M

@@ -62,7 +62,7 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
         step_img = {x: 0 for x in _modes}
     param = [x for name,x in net.named_parameters()]
     for epoch in range(args.epoch_start, args.epochs):
-        loss_per_epoch = {x: 0 for x in ['Loss', 'Loss_Out', 'Loss_X', 'Loss_E','Loss_ReY','Loss_ReZ']}
+        loss_per_epoch = {x: 0 for x in ['Loss', 'Loss_lh', 'kl_gauss', 'kl_Igamma','Loss_VBM']}
         mse_per_epoch = {x: 0 for x in _modes}
         grad_norm= 0
         tic = time.time()
@@ -76,7 +76,7 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
             im_noisy, im_gt, sigmaMapEst, sigmaMapGt = [x.cuda() for x in data]
             optimizer.zero_grad()
             Outlist = net(im_noisy)
-            loss, loss_lh, loss_kl_gauss, loss_kl_Igamma,loss_VBM = criterion(Outlist,im_gt,im_noisy,args.eps2,args.stages,args.batch_size)
+            loss, loss_lh, loss_kl_gauss, loss_kl_Igamma,loss_VBM = criterion(Outlist,im_gt,im_noisy,sigmaMapGt,args.eps2,args.stages,args.batch_size)
             
             loss.backward()
             # clip the gradnorm
@@ -93,7 +93,7 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
 
             if (ii+1) % args.print_freq == 0:
                 log_str = '[Epoch:{:>2d}/{:<2d}] {:s}:{:0>4d}/{:0>4d}, ' + \
-                        'loss={:.4f}, Out={:.4f}, X={:.4f}, E={:.4f}, ReY={:.4f}, ReZ={:.4f}, GNorm:{:.1e}/{:.1e}, lr={:.1e}'
+                        'loss={:.4f}, loss_lh={:.4f}, kl_gauss={:.4f}, kl_Igam={:.4f}, VBM={:.4f}, GNorm:{:.1e}/{:.1e}, lr={:.1e}'
                 print(log_str.format(epoch+1, args.epochs, phase, ii+1, num_iter_epoch[phase],
                                          loss.item(), loss_lh.item(), loss_kl_gauss.item(),loss_kl_Igamma.item(),loss_VBM.item(),
                                          clip_grad,total_norm, lr))
@@ -103,7 +103,7 @@ def train_model(net, datasets, optimizer, lr_scheduler, criterion):
                 #plot
                 show1 = im_gt.cpu().detach().numpy()[0].transpose((1,2,0))
                 show2 = im_noisy.cpu().detach().numpy()[0].transpose((1,2,0))
-                show3 = Outlist[-1].cpu().detach().numpy()[0,0,].transpose((1,2,0))
+                show3 = Outlist[-1].cpu().detach().numpy()[0,:C,].transpose((1,2,0))
                 #show4 = phi_sigma.cpu().detach().numpy()[0]
                 #show5 = sigmaMapGt.cpu().detach().numpy()[0]
                 #show6 = sigmaMapEst.cpu().detach().numpy()[0]
