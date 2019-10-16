@@ -35,6 +35,9 @@ def loss_fn(Outlist, im_noisy, im_gt, sigmaMap, eps2, stages,radius=3):
     log_beta_p=0
     dig_alp_p = 0
     alpha_div_beta_p=0
+    
+    layer_weight = [0.1,0.2,0.2,0.2,0.5,1]
+    
     for i in range(stages):
         Outlist[i][:, C:,].clamp_(min=log_min, max=log_max)
         mu=Outlist[i][:,:C,]
@@ -50,22 +53,22 @@ def loss_fn(Outlist, im_noisy, im_gt, sigmaMap, eps2, stages,radius=3):
         m2_div_eps = torch.div(m2, eps2)
         #err_mean_gt = im_noisy - im_gt
         kl_gauss =  0.5*(mu-im_gt)**2/eps2 + 0.5*(m2_div_eps - 1 - torch.log(m2_div_eps))
-        loss_kl_gauss += torch.mean(kl_gauss)
+        loss_kl_gauss += layer_weight[i]*torch.mean(kl_gauss)
 
     # KL divergence for Inv-Gamma distribution
         dig_alp = torch.digamma(alpha)
         kl_Igamma = (alpha-alpha0)*dig_alp + (log_gamma(alpha0) - log_gamma(alpha)) + \
                                    alpha0*(log_beta - torch.log(beta0)) + beta0 * alpha_div_beta - alpha
-        loss_kl_Igamma += torch.mean(kl_Igamma)
+        loss_kl_Igamma += layer_weight[i]*torch.mean(kl_Igamma)
 
     # likelihood of im_gt
         lh = 0.5 * log(2*pi) + 0.5 * (log_beta - torch.digamma(alpha)) + 0.5 * ((mu-im_noisy)**2+m2) * alpha_div_beta
-        loss_lh += torch.mean(lh)
+        loss_lh += layer_weight[i]*torch.mean(lh)
         
         #VB-M loss
         if i>0:
             temp_loss_VBM = 0.5*log_m2+0.5*((mu_p-mu)**2+m2_p)/m2-alpha*log_beta+log_gamma(alpha)+(alpha+1)*(log_beta_p-dig_alp_p)+beta*alpha_div_beta_p
-            loss_VBM+=torch.mean(temp_loss_VBM)
+            loss_VBM+=layer_weight[i]*torch.mean(temp_loss_VBM)
         mu_p=mu
         m2_p=m2
         log_beta_p=log_beta
