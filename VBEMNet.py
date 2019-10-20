@@ -56,7 +56,7 @@ class Mnet(nn.Module):
 
 
 class VBEMnet(nn.Module):
-    def __init__(self, level=6, n_channels=64, image_channels=3):
+    def __init__(self, level=4, n_channels=128, image_channels=3):
         super(VBEMnet, self).__init__()
         self.level = level
         self.n_channels=n_channels
@@ -66,18 +66,18 @@ class VBEMnet(nn.Module):
         self.Enet2=Enet(image_channels,n_channels)
         self.Enet3=Enet(image_channels,n_channels)
         self.Enet4=Enet(image_channels,n_channels)
-        self.Enet5=Enet(image_channels,n_channels)
-        self.Enet6=Enet(image_channels,n_channels)    	
+#        self.Enet5=Enet(image_channels,n_channels)
+#        self.Enet6=Enet(image_channels,n_channels)    	
 
         self.Mnet1=Mnet(image_channels,n_channels)
         self.Mnet2=Mnet(image_channels,n_channels)
         self.Mnet3=Mnet(image_channels,n_channels)
         self.Mnet4=Mnet(image_channels,n_channels)
-        self.Mnet5=Mnet(image_channels,n_channels)
-        self.Mnet6=Mnet(image_channels,n_channels)
+#        self.Mnet5=Mnet(image_channels,n_channels)
+#        self.Mnet6=Mnet(image_channels,n_channels)
 
-        self.Enetlist=[self.Enet1,self.Enet2,self.Enet3,self.Enet4,self.Enet5,self.Enet6]
-        self.Mnetlist=[self.Mnet1,self.Mnet2,self.Mnet3,self.Mnet4,self.Mnet5,self.Mnet6]
+        self.Enetlist=[self.Enet1,self.Enet2,self.Enet3,self.Enet4]#,self.Enet5,self.Enet6]
+        self.Mnetlist=[self.Mnet1,self.Mnet2,self.Mnet3,self.Mnet4]#,self.Mnet5,self.Mnet6]
 
         self._initialize_weights()
 

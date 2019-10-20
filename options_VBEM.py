@@ -15,7 +15,7 @@ def set_opts():
                                                   help="Initialized learning rate, (default: 1e-4)")
     parser.add_argument('--gamma', type=float, default=0.5,
                                          help="Decaying rate for the learning rate, (default: 0.5)")
-    parser.add_argument('--step_size', type=int, default=12,
+    parser.add_argument('--step_size', type=int, default=15,
                                      help="Step size for decaying the learning rate, (default: 10)")
     parser.add_argument('--epochs', type=int, default=100,
                                                    help="Number of training epochs, (default: 100)")
@@ -23,7 +23,7 @@ def set_opts():
                                                               help="Print frequence (default: 100)")
     parser.add_argument('-s', '--save_model_freq', type=int, default=1,
                                                             help="Save moel frequence (default: 1)")
-    parser.add_argument('--stages', type=int, default=6,
+    parser.add_argument('--stages', type=int, default=4,
                                                    help="Number of stages")
 
     # Cliping the Gradients Norm during the training
@@ -49,9 +49,9 @@ def set_opts():
                         help="Noise type of simulation: NIIDGauss or IIDGauss, (default:NIIDGauss)")
 
     # model and log saving
-    parser.add_argument('--log_dir', default='./log_VBEM', type=str, metavar='PATH',
+    parser.add_argument('--log_dir', default='./log_VBEM6', type=str, metavar='PATH',
                                                  help="Path to save the log file, (default: ./log)")
-    parser.add_argument('--model_dir', default='./model_VBEM', type=str, metavar='PATH',
+    parser.add_argument('--model_dir', default='./model_VBEM6', type=str, metavar='PATH',
                                              help="Path to save the model file, (default: ./model)")
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                                                help="Path to the latest checkpoint (default: None)")
