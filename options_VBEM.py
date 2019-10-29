@@ -49,9 +49,9 @@ def set_opts():
                         help="Noise type of simulation: NIIDGauss or IIDGauss, (default:NIIDGauss)")
 
     # model and log saving
-    parser.add_argument('--log_dir', default='./log_VBEM6', type=str, metavar='PATH',
+    parser.add_argument('--log_dir', default='./log_VBEM10', type=str, metavar='PATH',
                                                  help="Path to save the log file, (default: ./log)")
-    parser.add_argument('--model_dir', default='./model_VBEM6', type=str, metavar='PATH',
+    parser.add_argument('--model_dir', default='./model_VBEM10', type=str, metavar='PATH',
                                              help="Path to save the model file, (default: ./model)")
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                                                help="Path to the latest checkpoint (default: None)")
