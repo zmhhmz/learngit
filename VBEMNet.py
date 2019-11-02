@@ -56,7 +56,7 @@ class Mnet(nn.Module):
 
 
 class VBEMnet(nn.Module):
-    def __init__(self, level=4, n_channels=64, image_channels=3):
+    def __init__(self, level=4, n_channels=128, image_channels=3):
         super(VBEMnet, self).__init__()
         self.level = level
         self.n_channels=n_channels
