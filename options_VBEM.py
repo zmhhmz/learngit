@@ -23,7 +23,7 @@ def set_opts():
                                                               help="Print frequence (default: 100)")
     parser.add_argument('-s', '--save_model_freq', type=int, default=1,
                                                             help="Save moel frequence (default: 1)")
-    parser.add_argument('--stages', type=int, default=4,
+    parser.add_argument('--stages', type=int, default=6,
                                                    help="Number of stages")
 
     # Cliping the Gradients Norm during the training
@@ -49,9 +49,9 @@ def set_opts():
                         help="Noise type of simulation: NIIDGauss or IIDGauss, (default:NIIDGauss)")
 
     # model and log saving
-    parser.add_argument('--log_dir', default='./log_VBEM11', type=str, metavar='PATH',
+    parser.add_argument('--log_dir', default='./log_VBEM12', type=str, metavar='PATH',
                                                  help="Path to save the log file, (default: ./log)")
-    parser.add_argument('--model_dir', default='./model_VBEM11', type=str, metavar='PATH',
+    parser.add_argument('--model_dir', default='./model_VBEM12', type=str, metavar='PATH',
                                              help="Path to save the model file, (default: ./model)")
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                                                help="Path to the latest checkpoint (default: None)")

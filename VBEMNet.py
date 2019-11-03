@@ -56,28 +56,28 @@ class Mnet(nn.Module):
 
 
 class VBEMnet(nn.Module):
-    def __init__(self, level=4, n_channels=128, image_channels=3):
+    def __init__(self, level=6, n_channels=128, image_channels=3):
         super(VBEMnet, self).__init__()
         self.level = level
         self.n_channels=n_channels
         self.image_channels=image_channels
         self.initMNet = nn.Conv2d(in_channels=image_channels, out_channels=n_channels, kernel_size=3, padding=1, bias=False)
-        self.Enet1=Enet(image_channels,n_channels)
-        self.Enet2=Enet(image_channels,n_channels)
-        self.Enet3=Enet(image_channels,n_channels)
-        self.Enet4=Enet(image_channels,n_channels)
+        self.Enet=Enet(image_channels,n_channels)
+        #self.Enet2=Enet(image_channels,n_channels)
+        #self.Enet3=Enet(image_channels,n_channels)
+        self.Enetlast=Enet(image_channels,n_channels)
         #self.Enet5=Enet(image_channels,n_channels)
 #        self.Enet6=Enet(image_channels,n_channels)    	
 
-        self.Mnet1=Mnet(image_channels,n_channels)
-        self.Mnet2=Mnet(image_channels,n_channels)
-        self.Mnet3=Mnet(image_channels,n_channels)
+        self.Mnet=Mnet(image_channels,n_channels)
+        #self.Mnet2=Mnet(image_channels,n_channels)
+        #self.Mnet3=Mnet(image_channels,n_channels)
         #self.Mnet4=Mnet(image_channels,n_channels)
 #        self.Mnet5=Mnet(image_channels,n_channels)
 #        self.Mnet6=Mnet(image_channels,n_channels)
 
-        self.Enetlist=[self.Enet1,self.Enet2,self.Enet3]#,self.Enet4]#,self.Enet5,self.Enet6]
-        self.Mnetlist=[self.Mnet1,self.Mnet2,self.Mnet3]#,self.Mnet4]#,self.Mnet5,self.Mnet6]
+        #self.Enetlist=[self.Enet1,self.Enet2,self.Enet3]#,self.Enet4]#,self.Enet5,self.Enet6]
+        #self.Mnetlist=[self.Mnet1,self.Mnet2,self.Mnet3]#,self.Mnet4]#,self.Mnet5,self.Mnet6]
 
         self._initialize_weights()
 
@@ -87,12 +87,12 @@ class VBEMnet(nn.Module):
         M=self.initMNet(Y)
         for i in range(self.level-1):
             #VB-E
-            out=self.Enetlist[i](Y,M)#self.Enetlist[i](Y,M)
+            out=self.Enet(Y,M)#self.Enetlist[i](Y,M)
             Outlist.append(out)
             #VB-M
-            M=self.Mnetlist[i](out,Y,M)
+            M=self.Mnet(out,Y,M)
         #final output
-        out=self.Enet4(Y,M)#self.Enetlist[i](Y,M)
+        out=self.Enetlast(Y,M)#self.Enetlist[i](Y,M)
         Outlist.append(out)
         return Outlist
     

@@ -36,7 +36,7 @@ def loss_fn(Outlist, im_noisy, im_gt, sigmaMap, eps2, stages,radius=3):
     dig_alp_p = 0
     alpha_div_beta_p=0
     
-    layer_weight = [0.5,0.5,0.5,1]#,0.5,0.5,1]
+    layer_weight = [0.5]*(stages-1)+[1]#[0.5,0.5,0.5,1]#,0.5,0.5,1]
     
     for i in range(stages):
         Outlist[i][:, C:,].clamp_(min=log_min, max=log_max)
